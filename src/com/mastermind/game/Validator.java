@@ -47,4 +47,44 @@ public class Validator {
         }
         return "There is no Player " + (indexNum + 1);
     }
+
+    static public boolean validateCommand(Player player, String userInput) {
+        return switch (userInput.trim().toLowerCase()) {
+            case "history" -> {
+                player.printHistory();
+                yield true;
+            }
+            case "hint" -> {
+                if (player.getHintIndex() < game.getGameLevel()) {
+                    int index = player.getHintIndex();
+                    char code = game.getCode().charAt(index);
+                    System.out.println("inside hint ln 61");
+                    OutputHandler.getHint(index, code);
+                    player.decreaseHintsAllowed();
+                } else {
+                    OutputHandler.printResult("No more hints available.");
+                }
+                yield true;
+            }
+            case "time" -> {
+                long elapsedTime = System.currentTimeMillis() - player.getStartTime();
+                PlayTimeCalc.calcTime(elapsedTime);
+                yield true;
+            }
+            default -> {
+                yield false;
+            }
+        };
+    }
+
+    static public String validateCode(Player player, String userGuess) {
+        if (userGuess.length() != game.getGameLevel() || Integer.parseInt(userGuess) < 0) {
+            return "Must enter positive " + game.getGameLevel() + "-digit numbers";
+        }
+
+        if (userGuess.equals("1111")) {
+            return null;
+        }
+        return "Need logic for validating code";
+    }
 }

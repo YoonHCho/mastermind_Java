@@ -58,5 +58,4 @@ public class Game {
         OutputHandler.confirmNameChange(oldName, newName, index);
     }
 
-
 }

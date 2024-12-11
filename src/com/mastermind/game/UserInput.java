@@ -98,4 +98,29 @@ public class UserInput {
         }
         game.editPlayerName(playerIndex, newName);
     }
+
+    static public String guessInput(Player player) {
+        while (true) {
+            OutputHandler.playGameBeginningMsg(player.getName(), player.getAttempts(), player.getHintsAllowed());
+            try {
+                String userInput = sc.nextLine();
+                boolean isGameCommand = Validator.validateCommand(player, userInput);
+                if (isGameCommand) {
+                    continue;
+                } else {
+                    OutputHandler.printResult("Invalid command");
+                }
+                int num = Integer.parseInt(userInput);
+                String result = Validator.validateCode(player, userInput);
+                if (result != null) {
+                    OutputHandler.printResult(result);
+                    continue;
+                }
+
+                return null;
+            } catch (NumberFormatException e) {
+                OutputHandler.printResult("Need a " + game.getGameLevel() + "-digit numbers");
+            }
+        }
+    }
 }

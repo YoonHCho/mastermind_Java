@@ -1,22 +1,35 @@
 package com.mastermind.game;
 
+import com.mastermind.ui.OutputHandler;
+
 import static com.mastermind.Main.game;
-import static com.mastermind.Main.sc;
 
 public class PlayGame {
 
     int numOfTries = 10;
-    String userGuess;
+    static String userGuess;
     static int getTurn = 0;
 
     static public void playGame() {
         while (!game.getGameOver()) {
             Player currentPlayer = game.getPlayers().get(getTurn);
-            System.out.println(currentPlayer.getName());
-            String userInput = sc.nextLine();
-            if (userInput.equalsIgnoreCase("end")) {
+            if (!currentPlayer.isPlaying()) {
+                ++getTurn;
+                continue;
+            } else if (currentPlayer.getAttempts() < 1) {
+                currentPlayer.setIsPlaying(false);
+                continue;
+            }
+            currentPlayer.startTime();
+            userGuess = UserInput.guessInput(currentPlayer);
+            System.out.println(currentPlayer);
+            if (userGuess == null) {
                 break;
             }
+
+            getTurn++;
+            currentPlayer.decreaseAttempts();
+            currentPlayer.endTime();
         }
     }
 }
