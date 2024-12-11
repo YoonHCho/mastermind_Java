@@ -67,6 +67,42 @@ public class OutputHandler {
         System.out.println("Player " + (index + 1) + " name changed from " + oldName + " to " + newName);
     }
 
+    static public void playGameBeginningMsg(String name, int tries, int hints) {
+        System.out.println("\n**** In-Game Commands ****\nhistory - view the history of guesses and their feedback\nhint - you only get " + hints + "\ntime - view the current playing time\ngetCode - case sensitive, view the code to solve\n**************************\n");
+        System.out.println(name + ", you have " + tries + " attempts left");
+        System.out.println("Please enter " + game.getGameLevel() + "-digit numbers:");
+    }
+
+    static public void getHint(int index, char code) {
+        String result = "";
+
+        switch (index + 1) {
+            case 1 -> result += "First-digit hint:";
+            case 2 -> result += "Second-digit hint:";
+            case 3 -> result += "Third-digit hint:";
+            case 4 -> result += "Fourth-digit hint:";
+            case 5 -> result += "Fifth-digit hint:";
+            case 6 -> result += "Sixth-digit hint:";
+            case 7 -> result += "Seventh-digit hint:";
+            case 8 -> result += "Eighth-digit hint:";
+            default -> result += "Cannot find the " + (index + 1) + "-placed Number";
+        }
+
+        switch (code) {
+            case '0' -> result += "\tI hold no identity. I am the empty vessel, ready to be filled with any data. What am I?";
+            case '1' -> result += "\tI am the smallest whole number, yet mighty in my simplicity. What am I?";
+            case '2' -> result += "\tI am the number of times you blink and I symbolize teamwork. What am I?";
+            case '3' -> result += "\tI am the number of primary colors for your CSS color property. What am I?";
+            case '4' -> result += "\tIn some Eastern cultures, I am feared because I resemble 'death'. What am I?";
+            case '5' -> result += "\tI am the one and only prime number that has a sum of two consecutive prime numbers. What am I?";
+            case '6' -> result += "\tI am the only number that is both the sum and product of three consecutive positive numbers. What am I?";
+            case '7' -> result += "\tI am the number of continents in your world. What am I?";
+            default -> result += "\tThere is no more hints";
+
+        }
+        System.out.println(result);
+    }
+
 
 
 
