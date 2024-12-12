@@ -2,10 +2,12 @@ package com.mastermind.game;
 
 import com.mastermind.ui.OutputHandler;
 
+import java.util.ArrayList;
+
 public class Player {
     private String name;
     private int score;
-    private String history;
+    private ArrayList<String> history;
     private boolean isPlaying;
     private int hintsAllowed;
     private int attempts;
@@ -22,6 +24,7 @@ public class Player {
         this.timeElapsed = 0;
         this.score = 0;
         this.hintIndex = 0;
+        this.history = new ArrayList<>();
     }
 
     public String getName() {
@@ -32,8 +35,16 @@ public class Player {
         return this.score;
     }
 
+    public long getTimeElapsed() {
+        return this.timeElapsed;
+    }
+
     public void printHistory() {
-        OutputHandler.printResult(this.history);
+        if (!history.isEmpty()) {
+            OutputHandler.printHistory(this.history);
+            return;
+        }
+        OutputHandler.printResult("You do not have any feedback.");
     }
 
     public int getAttempts() {
@@ -45,7 +56,11 @@ public class Player {
     }
 
     public int getHintIndex() {
-        return this.hintIndex++;
+        return this.hintIndex;
+    }
+
+    public void incrementHintIndex() {
+        this.hintIndex++;
     }
 
     public long getStartTime() {
@@ -60,6 +75,10 @@ public class Player {
         this.name = name;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public void decreaseHintsAllowed() {
         this.hintsAllowed--;
     }
@@ -72,6 +91,10 @@ public class Player {
         this.isPlaying = b;
     }
 
+    public void addHistory(String feedback) {
+        this.history.add(feedback);
+    }
+
     public void startTime() {
         this.startTime = System.currentTimeMillis();
     }
@@ -80,7 +103,9 @@ public class Player {
         this.timeElapsed += System.currentTimeMillis() - this.startTime;
     }
 
+    // might not need below
+    @Override
     public String toString() {
-        return getName() + "(name), " + getHintsAllowed() + "(hintsAllowed), " + getHintIndex() + "(hintIndex)";
+        return getName() + "(name), " + getHintsAllowed() + "(hintsAllowed), " + getHintIndex() + "(hintIndex), ";
     }
 }

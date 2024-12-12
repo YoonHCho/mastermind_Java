@@ -2,6 +2,8 @@ package com.mastermind.game;
 
 import com.mastermind.ui.OutputHandler;
 
+import java.util.HashMap;
+
 import static com.mastermind.Main.game;
 
 public class Validator {
@@ -47,44 +49,93 @@ public class Validator {
         }
         return "There is no Player " + (indexNum + 1);
     }
+    
+    static public boolean validateCommand(String userInput) {
+        return userInput.equalsIgnoreCase("history") ||
+                userInput.equalsIgnoreCase("hint") ||
+                userInput.equalsIgnoreCase("time") ||
+                userInput.equals("getCode");
+    }
 
-    static public boolean validateCommand(Player player, String userInput) {
-        return switch (userInput.trim().toLowerCase()) {
+    static public void handleCommand(Player player, String action) {
+        if (action.equals("getCode")) {
+            OutputHandler.printResult("=== ANSWER ===" + game.getCode() + "==============");
+            return;
+        }
+        switch (action.toLowerCase()) {
             case "history" -> {
                 player.printHistory();
-                yield true;
             }
             case "hint" -> {
-                if (player.getHintIndex() < game.getGameLevel()) {
-                    int index = player.getHintIndex();
+                int index = player.getHintIndex();
+                if (index < game.getGameLevel()) {
                     char code = game.getCode().charAt(index);
-                    System.out.println("inside hint ln 61");
                     OutputHandler.getHint(index, code);
                     player.decreaseHintsAllowed();
+                    player.incrementHintIndex();
                 } else {
                     OutputHandler.printResult("No more hints available.");
                 }
-                yield true;
             }
             case "time" -> {
-                long elapsedTime = System.currentTimeMillis() - player.getStartTime();
-                PlayTimeCalc.calcTime(elapsedTime);
-                yield true;
+                long elapsedTime = player.getTimeElapsed() + System.currentTimeMillis() - player.getStartTime();
+                Calculate.calcTime(player, elapsedTime);
             }
-            default -> {
-                yield false;
-            }
-        };
+        }
     }
 
-    static public String validateCode(Player player, String userGuess) {
-        if (userGuess.length() != game.getGameLevel() || Integer.parseInt(userGuess) < 0) {
-            return "Must enter positive " + game.getGameLevel() + "-digit numbers";
+    static public boolean validateGuess(String userInput) {
+        if (userInput.isBlank() || Integer.parseInt(userInput) < 0 || userInput.length() != game.getGameLevel()) {
+            return false;
         }
 
-        if (userGuess.equals("1111")) {
-            return null;
+        try {
+            Integer.parseInt(userInput);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
-        return "Need logic for validating code";
+    }
+
+    // Player player, String userGuess
+    static public String validateCode(Player player, String userGuess, String code) {
+        int correctPlaces = 0;
+        int correctNumbers = 0;
+        String result;
+        HashMap<Character, Integer> records = new HashMap<>();
+
+        for (int i = 0; i < code.length(); i++) {
+            char codeChar = code.charAt(i);
+            char userChar = userGuess.charAt(i);
+
+            if (codeChar == userChar) {
+                correctPlaces++;
+            }
+
+            if (records.containsKey(codeChar)) {
+                records.put(codeChar, records.get(codeChar) + 1);
+            } else {
+                records.put(codeChar, 1);
+            }
+        }
+
+        for (int i = 0; i < userGuess.length(); i++) {
+            char userChar = userGuess.charAt(i);
+
+            if (records.containsKey(userChar) && records.get(userChar) > 0) {
+                records.put(userChar, records.get(userChar) - 1);
+                correctNumbers++;
+            }
+        }
+
+        result = correctPlaces + (correctPlaces > 1 ? " correct placements AND " : " correct placement AND ") + correctNumbers + (correctNumbers > 1 ? " correct numbers" : " correct number");
+        OutputHandler.printResult(result);
+        player.addHistory(userGuess + ": " + result);
+
+        if (correctPlaces == 4 && correctNumbers == 4) {
+            return "solved";
+        }
+
+        return null;
     }
 }

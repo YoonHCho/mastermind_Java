@@ -53,7 +53,7 @@ public class UserInput {
             }
         }
 
-        int playerNumIndex;
+//        int playerNumIndex;
         while (true) {
             OutputHandler.confirmNames();
             String userInput = sc.nextLine();
@@ -103,21 +103,17 @@ public class UserInput {
         while (true) {
             OutputHandler.playGameBeginningMsg(player.getName(), player.getAttempts(), player.getHintsAllowed());
             try {
-                String userInput = sc.nextLine();
-                boolean isGameCommand = Validator.validateCommand(player, userInput);
-                if (isGameCommand) {
-                    continue;
-                } else {
-                    OutputHandler.printResult("Invalid command");
-                }
-                int num = Integer.parseInt(userInput);
-                String result = Validator.validateCode(player, userInput);
-                if (result != null) {
-                    OutputHandler.printResult(result);
+                String userInput = sc.nextLine().trim();
+
+                if (Validator.validateCommand(userInput)) {
+                    Validator.handleCommand(player, userInput);
                     continue;
                 }
 
-                return null;
+                if (Validator.validateGuess(userInput)) {
+                    return userInput;
+                }
+                throw new NumberFormatException();
             } catch (NumberFormatException e) {
                 OutputHandler.printResult("Need a " + game.getGameLevel() + "-digit numbers");
             }

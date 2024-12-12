@@ -68,12 +68,13 @@ public class OutputHandler {
     }
 
     static public void playGameBeginningMsg(String name, int tries, int hints) {
-        System.out.println("\n**** In-Game Commands ****\nhistory - view the history of guesses and their feedback\nhint - you only get " + hints + "\ntime - view the current playing time\ngetCode - case sensitive, view the code to solve\n**************************\n");
+        System.out.println("\n**** In-Game Commands ****\nhistory - view the history of guesses and their feedback\nhint - " + (hints > 0 ? "show hint, you only have " + hints + " available" : "no hints available") + "\ntime - view the current player's play time\ngetCode - case sensitive, show answer\n**************************\n");
         System.out.println(name + ", you have " + tries + " attempts left");
         System.out.println("Please enter " + game.getGameLevel() + "-digit numbers:");
     }
 
     static public void getHint(int index, char code) {
+        System.out.println("===== HINT =====");
         String result = "";
 
         switch (index + 1) {
@@ -101,9 +102,16 @@ public class OutputHandler {
 
         }
         System.out.println(result);
+        System.out.println("================\n");
     }
 
-
+    static public void printHistory(ArrayList<String> history) {
+        OutputHandler.printResult("\n===== HISTORY =====");
+        for (String feedback : history) {
+            System.out.println(feedback);
+        }
+        OutputHandler.printResult("===================\n");
+    }
 
 
 }
