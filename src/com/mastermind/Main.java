@@ -26,7 +26,7 @@ public class Main {
         sc = new Scanner(System.in);
         OutputHandler.welcomeMessage();
         int gameLevel = UserInput.levelInput();
-        String gameCode = "0123";
+        String gameCode = "4321";
         int maxPlayers = 4;
         int numOfPlayers = UserInput.playerNumInput(maxPlayers);
         game = new Game(gameLevel, gameCode, numOfPlayers);
@@ -42,5 +42,6 @@ public class Main {
         for (Player player : game.getPlayers()) {
             System.out.println(player);
         }
+        game.end();
     }
 }

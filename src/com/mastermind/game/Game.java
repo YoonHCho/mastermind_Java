@@ -10,7 +10,7 @@ public class Game {
     private int numOfPlayers;
     private ArrayList<Player> players;
     private long startTime;
-    private long endTime;
+    private long elapsedTime;
     private boolean gameOver;
 
     public Game(int gameLevel, String code, int numOfPlayers) {
@@ -41,10 +41,18 @@ public class Game {
         return this.gameOver;
     }
 
+    public void setGameOver(boolean b) {
+        this.gameOver = true;
+    }
+
     public void start() {
         this.startTime = System.currentTimeMillis();
         OutputHandler.generatingGame(this.numOfPlayers, this.gameLevel);
         UserInput.playerNameInput(this.numOfPlayers, this.gameLevel);
+    }
+
+    public void end() {
+        this.elapsedTime = System.currentTimeMillis() - this.startTime;
     }
 
     public void addPlayers(Player player) {
