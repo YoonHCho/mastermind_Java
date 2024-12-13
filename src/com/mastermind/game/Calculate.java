@@ -1,6 +1,9 @@
 package com.mastermind.game;
 
 import com.mastermind.ui.OutputHandler;
+
+import java.util.ArrayList;
+
 import static com.mastermind.Main.game;
 
 public class Calculate {
@@ -9,7 +12,7 @@ public class Calculate {
         int minutes = (int) (elapsedTime / 60000);
         int seconds = (int) (elapsedTime / 1000) % 60;
         String time = (minutes > 0 ? minutes + " minutes " + seconds + " seconds.": seconds + " seconds");
-        OutputHandler.printResult("Total game time: " + time);
+        OutputHandler.printResult("\nTotal game time: " + time);
     }
 
     static public void calcTime(Player player, long elapsedTime) {
@@ -37,5 +40,25 @@ public class Calculate {
         } else {
             return 10;
         }
+    }
+
+    static public void calcGameResult(ArrayList<String> result) {
+        OutputHandler.printResult("\n===== Calculating Current Game Score =====");
+        if (!result.isEmpty()) {
+            String topScoreInfo = "";
+            int highest = Integer.MIN_VALUE;
+
+            for (String info : result) {
+                String[] infoSplit = info.split(": ");
+                int score = Integer.parseInt(infoSplit[1]);
+                if (score > highest) {
+                    highest = score;
+                    topScoreInfo = infoSplit[0] + " has the highest score: " + infoSplit[1];
+                }
+            }
+            OutputHandler.printResult(topScoreInfo);
+            return;
+        }
+        OutputHandler.printResult("There was no highest score in current play");
     }
 }

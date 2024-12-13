@@ -59,13 +59,11 @@ public class Validator {
 
     static public void handleCommand(Player player, String action) {
         if (action.equals("getCode")) {
-            OutputHandler.printResult("=== ANSWER ===" + game.getCode() + "==============");
+            OutputHandler.printResult("=== ANSWER: " + game.getCode() + " ===");
             return;
         }
         switch (action.toLowerCase()) {
-            case "history" -> {
-                player.printHistory();
-            }
+            case "history" -> player.printHistory();
             case "hint" -> {
                 int index = player.getHintIndex();
                 if (index < game.getGameLevel()) {
@@ -97,7 +95,6 @@ public class Validator {
         }
     }
 
-    // Player player, String userGuess
     static public String validateCode(Player player, String userGuess, String code) {
         int correctPlaces = 0;
         int correctNumbers = 0;
@@ -132,10 +129,9 @@ public class Validator {
         OutputHandler.printResult(result);
         player.addHistory(userGuess + ": " + result);
 
-        if (correctPlaces == 4 && correctNumbers == 4) {
+        if (correctPlaces == game.getGameLevel() && correctNumbers == game.getGameLevel()) {
             return "solved";
         }
-
         return null;
     }
 }

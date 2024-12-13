@@ -1,7 +1,6 @@
 package com.mastermind.ui;
 
 import com.mastermind.game.Player;
-import com.mastermind.game.UserInput;
 
 import java.util.ArrayList;
 
@@ -68,8 +67,9 @@ public class OutputHandler {
     }
 
     static public void playGameBeginningMsg(String name, int tries, int hints) {
-        System.out.println("\n**** In-Game Commands ****\nhistory - view the history of guesses and their feedback\nhint - " + (hints > 0 ? "show hint, you only have " + hints + " available" : "no hints available") + "\ntime - view the current player's play time\ngetCode - case sensitive, show answer\n**************************\n");
-        System.out.println(name + ", you have " + tries + " attempts left");
+        System.out.println("\n**** In-Game Commands ****\nhistory - view the history of guesses and their feedback\nhint - " + (hints > 0 ? "show hint, you only have " + hints + " available" : " show hint, no hints available") + "\ntime - view the current player's play time\ngetCode - case sensitive, show answer\n**************************\n");
+        System.out.println("* Only includes numbers from 0 to 7 *");
+        System.out.println(name + ", you have " + (tries > 1 ? tries + " attempts left" : tries + " attempt left"));
         System.out.println("Please enter " + game.getGameLevel() + "-digit numbers:");
     }
 
@@ -112,6 +112,4 @@ public class OutputHandler {
         }
         OutputHandler.printResult("===================\n");
     }
-
-
 }
