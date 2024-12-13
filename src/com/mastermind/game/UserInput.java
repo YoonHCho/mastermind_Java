@@ -18,7 +18,7 @@ public class UserInput {
                 }
                 OutputHandler.printResult(result);
             } catch (NumberFormatException e) {
-                System.out.println("Need a whole number");
+                OutputHandler.printResult("Need a whole number");
             }
         }
     }
@@ -34,7 +34,7 @@ public class UserInput {
                 }
                 OutputHandler.printResult(result);
             } catch (NumberFormatException e) {
-                System.out.println("Please input a whole number");
+                OutputHandler.printResult("Please input a whole number");
             }
         }
     }
@@ -53,7 +53,6 @@ public class UserInput {
             }
         }
 
-//        int playerNumIndex;
         while (true) {
             OutputHandler.confirmNames();
             String userInput = sc.nextLine();

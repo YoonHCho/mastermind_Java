@@ -7,12 +7,11 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private int score;
-    private ArrayList<String> history;
+    private final ArrayList<String> history;
     private boolean isPlaying;
     private int hintsAllowed;
     private int attempts;
     private long startTime;
-    private long endTime;
     private long timeElapsed;
     private int hintIndex;
 
@@ -101,11 +100,5 @@ public class Player {
 
     public void endTime() {
         this.timeElapsed += System.currentTimeMillis() - this.startTime;
-    }
-
-    // might not need below
-    @Override
-    public String toString() {
-        return getName() + "(name), " + getHintsAllowed() + "(hintsAllowed), " + getHintIndex() + "(hintIndex), ";
     }
 }

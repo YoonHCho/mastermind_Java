@@ -1,5 +1,7 @@
 package com.mastermind.api;
 
+import com.mastermind.ui.OutputHandler;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -21,11 +23,12 @@ public class Api {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(uriStr)).build();
 
             // send the request and get response
+            OutputHandler.printResult("Sending request, waiting for the response");
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             code = response.body().replaceAll("\n", "");
             return code;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            OutputHandler.printResult(e.getMessage());
             throw new Error("Please check the if API is working and try again, exiting game.");
         }
     }

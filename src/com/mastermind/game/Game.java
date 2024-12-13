@@ -5,12 +5,11 @@ import com.mastermind.ui.OutputHandler;
 import java.util.ArrayList;
 
 public class Game {
-    private int gameLevel;
-    private String code;
-    private int numOfPlayers;
-    private ArrayList<Player> players;
+    private final int gameLevel;
+    private final String code;
+    private final int numOfPlayers;
+    private final ArrayList<Player> players;
     private long startTime;
-    private long elapsedTime;
     private boolean gameOver;
 
     public Game(int gameLevel, String code, int numOfPlayers) {
@@ -42,7 +41,7 @@ public class Game {
     }
 
     public void setGameOver(boolean b) {
-        this.gameOver = true;
+        this.gameOver = b;
     }
 
     public void start() {
@@ -52,7 +51,8 @@ public class Game {
     }
 
     public void end() {
-        this.elapsedTime = System.currentTimeMillis() - this.startTime;
+        long elapsedTime = System.currentTimeMillis() - this.startTime;
+        Calculate.calcTime(elapsedTime);
     }
 
     public void addPlayers(Player player) {
@@ -65,5 +65,4 @@ public class Game {
         playerNameToEdit.setName(newName);
         OutputHandler.confirmNameChange(oldName, newName, index);
     }
-
 }
