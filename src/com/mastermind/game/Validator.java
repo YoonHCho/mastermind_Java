@@ -96,7 +96,7 @@ public class Validator {
     }
 
     static public String validateCode(Player player, String userGuess, String code) {
-        int correctPlaces = 0;
+        int correctLocations = 0;
         int correctNumbers = 0;
         String result;
         HashMap<Character, Integer> records = new HashMap<>();
@@ -106,7 +106,7 @@ public class Validator {
             char userChar = userGuess.charAt(i);
 
             if (codeChar == userChar) {
-                correctPlaces++;
+                correctLocations++;
             }
 
             if (records.containsKey(codeChar)) {
@@ -125,11 +125,11 @@ public class Validator {
             }
         }
 
-        result = correctPlaces + (correctPlaces > 1 ? " correct placements AND " : " correct placement AND ") + correctNumbers + (correctNumbers > 1 ? " correct numbers" : " correct number");
+        result = correctNumbers + (correctNumbers > 1 ? " correct numbers AND " : " correct number AND ") + correctLocations + (correctLocations > 1 ? " correct locations" : " correct location");
         OutputHandler.printResult(result);
         player.addHistory(userGuess + ": " + result);
 
-        if (correctPlaces == game.getGameLevel() && correctNumbers == game.getGameLevel()) {
+        if (correctLocations == game.getGameLevel() && correctNumbers == game.getGameLevel()) {
             return "solved";
         }
         return null;
