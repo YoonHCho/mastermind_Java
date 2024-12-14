@@ -47,6 +47,7 @@ public class PlayGame {
                 game.setGameOver(true);
             }
         }
+        OutputHandler.printResult("\nGame finished, calculating result");
         return solvedPlayers;
     }
 }

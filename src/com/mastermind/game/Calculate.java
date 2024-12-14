@@ -49,6 +49,8 @@ public class Calculate {
             int highest = Integer.MIN_VALUE;
 
             for (String info : result) {
+                // print each player
+                OutputHandler.printResult(info);
                 String[] infoSplit = info.split(": ");
                 int score = Integer.parseInt(infoSplit[1]);
                 if (score > highest) {
@@ -56,7 +58,7 @@ public class Calculate {
                     topScoreInfo = infoSplit[0] + " has the highest score: " + infoSplit[1];
                 }
             }
-            OutputHandler.printResult(topScoreInfo);
+            OutputHandler.printResult("\n" + topScoreInfo);
             return;
         }
         OutputHandler.printResult("There was no highest score in current play");
