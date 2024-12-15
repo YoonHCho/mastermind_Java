@@ -19,7 +19,7 @@ The Mastermind Game is a classic code-breaking game where the player attempts to
 - Score is updated once a user solves
 - Shows total game play time
 - Lists only the players that solved the code and their score, shows the player with the highest score
-- Writes a file which keeps top 5 scores of all time
+- Read and Writes a file which keeps top 5 scores of all time
 
 ## In-Game Useful Commands
 
@@ -30,17 +30,15 @@ While guessing for the randomly generated number, player can also take advantage
 - `time` - view the current player's playing time
 - `getCode` - case-sensitive. View the code to solve
 
-[Go Back to Reading the Game](#playing-game)
-
 ## Making the Application
 
-Completing a Web Dev Bootcamp, I have only used JavaScript, but to 
-challenge myself, I've decided to code in Java where I only have little 
-experience with. Also, because I believe it aligns more as a back-end 
-programming language. I first approached my project using procedural 
-programming design. Java uses heavily relies on object-oriented 
-programming principles and features. I've tried my best to implement 
-OOP designs in the project.
+Completing a Web Dev Bootcamp, I have only used JavaScript using VS code, 
+but to challenge myself, I've decided to code in Java, using IntelliJ, 
+where I only have little experience with. Also, because I believe it 
+aligns more as a back-end programming language. I first approached my  
+project using procedural programming design. Java uses heavily relies 
+on object-oriented programming principles and features. I've tried my 
+best to implement OOP designs in the project.
 
 > I wanted to first separate few sections into different sub-packages 
 > for better organization.
@@ -69,9 +67,8 @@ field in `game`'s field as ArrayList. Once all the player names are
 confirmed, `playGame` method is called.
 
 > **User Input:** Whenever a user input is required, `UserInput` class, 
-> the input is 
-> validated with the `Validator` class. If a user doesn't provide a 
-> valid input, program will repeat the question.
+> the input is validated with the `Validator` class. If a user doesn't 
+> provide a valid input, program will repeat the question.
 
 > **Adding Players:** I've used while loop for getting the player's 
 > information to implement multi-player feature. The program will keep 
@@ -100,11 +97,15 @@ time and at the end it will subtract current millisecond with start
 time and the result of it will be accumulated in the current player's 
 field to keep track of each player's play time. In each turn, game will 
 ask for the user guess for the code to solve and run the `validateCode` 
-of the `Validator` class.
+of the `Validator` class. Each player instance has a field to track the 
+number of attempts left, the field decreases at the end of each 
+player's turn and when the attempt runs out, another field in the 
+instance `isPlaying` changes its value to false. This allows the 
+program to skip the player that is not playing.
 
 > **Playing the Game:** Once all the player(s) are added, playGame 
 > method is called. It will show the in-game commands: command to show 
-> the history, time, hint, and retrieve the answer. Also will show the 
+> the history, time, hint, and retrieve the answer. Also, will show the 
 > player name, how many hints the player has left (inside the in-game 
 > command), and how many attempts a player has left. Main functionality 
 > is inside the `PlayGame` class.
@@ -118,4 +119,28 @@ of the `Validator` class.
 > number and check if it contains the number in the HashMap, if it does,
 > increment correct number and decrement the value.
 
+Once the game is over by either out of attempts for all players and/or 
+players solved the code, it will return the `ArrayList` of the solved 
+players in a `String.` Then it will display all the players with their 
+scores and shows the highest score for the game play.
+Lastly, `readWriteTopPlayers` method of `TopPlayersHandler` class is 
+called to add each of the current player's name and score into an 
+instance of `PlayerScore.` These instances then will be added to a 
+`List.` Furthermore, the text file `top5.txt` is read to get the all 
+the previous top 5 scored players, create instance for each, then added 
+to the `List.` Once all the players are added, the list will sort in 
+descending order (to list from the highest score to least), and write 
+to the `top5.txt` file but only will write 5 players only. Will also 
+output the top 5 players and the game ending message.
+
 - Programming Language: **Java**
+
+## Try it yourself
+I've used the IntelliJ IDE, if you don't have it, please [download]
+(https://www.jetbrains.com/idea/download) it.
+
+Go to this [link](https://github.com/YoonHCho/mastermind_Java) and clone the repo. Please refer to this [link](https://www.jetbrains.com/help/idea/set-up-a-git-repository.html) if you're not familiar with cloning a repo.
+
+When the project opens, you should be automatically in the project 
+directory. Find the `Main.java` inside the `src` directory of the 
+project and `Run` the file to run the application.

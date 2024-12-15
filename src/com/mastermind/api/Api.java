@@ -23,7 +23,6 @@ public class Api {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(uriStr)).build();
 
             // send the request and get response
-            OutputHandler.printResult("Sending request, waiting for the response");
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             code = response.body().replaceAll("\n", "");
             return code;

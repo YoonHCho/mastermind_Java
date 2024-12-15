@@ -36,7 +36,7 @@ public class PlayGame {
                 solvedPlayers.add(currentPlayer.getName() + ": " + currentPlayer.getScore());
             }
 
-            if (currentPlayer.getAttempts() < 1) {
+            if (currentPlayer.getAttempts() < 1 && currentPlayer.isPlaying()) {
                 currentPlayer.setIsPlaying(false);
                 currentPlayer.setScore(0);
                 OutputHandler.printResult("Sorry " + currentPlayer.getName() + ", you've exhausted all your attempts. The game is over for you.");
