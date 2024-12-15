@@ -11,17 +11,15 @@ public class TopPlayersHandler {
 
     static public void readWriteTopPlayers(ArrayList<String> curPlayers) {
         // if no solved players doesn't exist return. don't need to read and/or write
-//        if (curPlayers.isEmpty()) return null;
+        if (curPlayers.isEmpty()) return;
 
         // need a place to store the playerScore in a listArray
         List<PlayerScore> topPlayers = new ArrayList<>();
 
         // if there are players that solved add the current game players to list
-        if (!curPlayers.isEmpty()) {
-            for (String player : curPlayers) {
-                String[] playerArr = player.split(": ");
-                topPlayers.add(new PlayerScore(playerArr[0], Integer.parseInt(playerArr[1])));
-            }
+        for (String player : curPlayers) {
+            String[] playerArr = player.split(": ");
+            topPlayers.add(new PlayerScore(playerArr[0], Integer.parseInt(playerArr[1])));
         }
 
         // get the already existing players from file.
@@ -38,9 +36,11 @@ public class TopPlayersHandler {
             reader.close();
         } catch (IOException e) {
             OutputHandler.printResult("Error reading file: " + e.getMessage());
+            OutputHandler.printResult("Creating file");
         }
 
-        // sort by score
+        // if no already existing players, exit w/o writing
+        // if players exist sort by score
         if (topPlayers.isEmpty()) return;
         topPlayers.sort((p1, p2) -> Integer.compare(p2.score, p1.score));
         int rank = 1;

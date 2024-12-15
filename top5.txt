@@ -1,6 +1,5 @@
 === TOP 5 PLAYERS ===
-1. two: 155
-2. two: 143
-3. two: 134
-4. one: 89
-5. one: 59
+1. new: 83
+2. two: 59
+3. three: 47
+4. one: 35
