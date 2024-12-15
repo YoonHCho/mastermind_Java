@@ -25,6 +25,9 @@ public class Main {
         Calculate.calcGameResult(result);
 
         // Read and Write to txt file
-        TopPlayersHandler.readWriteTopPlayers(result);
+        StringBuilder addToEndMsg =
+                TopPlayersHandler.readWriteTopPlayers(result);
+
+        OutputHandler.endMsg(addToEndMsg);
     }
 }

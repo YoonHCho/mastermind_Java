@@ -1,6 +1,6 @@
 === TOP 5 PLAYERS ===
 1. one: 263
-2. two: 155
-3. two: 143
-4. two: 134
-5. example: 110
+2. one: 178
+3. two: 155
+4. two: 143
+5. two: 134

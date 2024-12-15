@@ -46,7 +46,6 @@ public class Game {
 
     public void start() {
         this.startTime = System.currentTimeMillis();
-        OutputHandler.generatingGame(this.numOfPlayers, this.gameLevel);
         UserInput.playerNameInput(this.numOfPlayers, this.gameLevel);
     }
 

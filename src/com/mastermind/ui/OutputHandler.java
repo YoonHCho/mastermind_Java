@@ -31,11 +31,6 @@ public class OutputHandler {
         System.out.print("How many players (min: 1, max: " + num + "): ");
     }
 
-    static public void generatingGame(int numOfPlayers, int level) {
-        System.out.println("Generating game for " + numOfPlayers + (numOfPlayers > 1 ? " players" : " player"));
-        System.out.println("Game Level: " + level + "\n");
-    }
-
     static public void mainPlayerNameMsg(int num) {
         System.out.print("Please input name for Player " + num + ": ");
     }
@@ -68,7 +63,7 @@ public class OutputHandler {
 
     static public void playGameBeginningMsg(String name, int tries, int hints) {
         System.out.println("\n**** In-Game Commands ****\nhistory - view the history of guesses and their feedback\nhint - " + (hints > 0 ? "show hint, you only have " + hints + " available" : " show hint, no hints available") + "\ntime - view the current player's play time\ngetCode - case sensitive, show answer\n**************************\n");
-        System.out.println("* Only includes numbers from 0 to 7 *");
+        System.out.println("* Only include numbers from 0 to 7 *");
         System.out.println(name + ", you have " + (tries > 1 ? tries + " attempts left" : tries + " attempt left"));
         System.out.println("Please enter " + game.getGameLevel() + "-digit numbers:");
     }
@@ -106,10 +101,21 @@ public class OutputHandler {
     }
 
     static public void printHistory(ArrayList<String> history) {
-        OutputHandler.printResult("\n===== HISTORY =====");
+        System.out.println("\n===== HISTORY =====");
         for (String feedback : history) {
             System.out.println(feedback);
         }
-        OutputHandler.printResult("===================\n");
+        System.out.println("===================\n");
+    }
+
+    static public void endMsg(StringBuilder part) {
+        if (!part.isEmpty()) {
+            System.out.println("\n" + part);
+        }
+        System.out.println("""
+                *************************************
+                Thank you for playing the Mastermind.
+                Exiting game now.
+                *************************************""");
     }
 }
