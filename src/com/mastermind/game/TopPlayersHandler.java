@@ -9,7 +9,7 @@ import java.util.List;
 public class TopPlayersHandler {
     static public String filePath = "top5.txt";
 
-    static public StringBuilder readWriteTopPlayers(ArrayList<String> curPlayers) {
+    static public void readWriteTopPlayers(ArrayList<String> curPlayers) {
         // if no solved players doesn't exist return. don't need to read and/or write
 //        if (curPlayers.isEmpty()) return null;
 
@@ -41,32 +41,27 @@ public class TopPlayersHandler {
         }
 
         // sort by score
+        if (topPlayers.isEmpty()) return;
         topPlayers.sort((p1, p2) -> Integer.compare(p2.score, p1.score));
         int rank = 1;
 
         // write with updated top 5 players
-        StringBuilder partOfEndMessage = new StringBuilder();
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
             String header = "=== TOP 5 PLAYERS ===\n";
-            partOfEndMessage.append(header);
+            OutputHandler.printResult(header);
             writer.write(header);
             for (PlayerScore player : topPlayers) {
                 if (rank > 5) break;
                 String playerInfo =
-                        rank + ". " + player.name + ": " + player.score + "\n";
-                partOfEndMessage.append(playerInfo);
-                writer.write(playerInfo);
+                        rank + ". " + player.name + ": " + player.score;
+                OutputHandler.printResult(playerInfo);
+                writer.write(playerInfo + "\n");
                 rank++;
             }
             writer.close();
         } catch (IOException e) {
             OutputHandler.printResult("Error writing file" + e.getMessage());
         }
-
-        if (partOfEndMessage.isEmpty()) {
-            return null;
-        }
-        return partOfEndMessage;
     }
 }
