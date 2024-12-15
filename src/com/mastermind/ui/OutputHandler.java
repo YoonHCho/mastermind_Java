@@ -24,6 +24,10 @@ public class OutputHandler {
     }
 
     static public void printResult(String result) {
+        if (result.startsWith("=== TOP")) {
+            System.out.print("\n" + result);
+            return;
+        }
         System.out.println(result);
     }
 
@@ -108,10 +112,7 @@ public class OutputHandler {
         System.out.println("===================\n");
     }
 
-    static public void endMsg(StringBuilder part) {
-        if (!part.isEmpty()) {
-            System.out.println("\n" + part);
-        }
+    static public void endMsg() {
         System.out.println("""
                 *************************************
                 Thank you for playing the Mastermind.
